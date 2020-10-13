@@ -98,3 +98,19 @@ def Tableaux(f):
 	listaHojas = [[A]]
 
 	return listaInterpsVerdaderas
+
+##############################################################################
+# Definición de funciones de ejercicios
+##############################################################################
+
+def complemento(l):
+    if l.label == '-':
+        return l.right
+    else :
+        return Tree('-', None, l)
+    
+l = Tree('-', None, Tree('p', None, None))
+m = Tree('p', None, None)
+
+print(Inorder(complemento(l)))
+print(Inorder(complemento(m)))
