@@ -59,11 +59,28 @@ def imprime_hoja(H):
 	return cadena + "}"
 
 def par_complementario(l):
-	# Esta función determina si una lista de solo literales
-	# contiene un par complementario
-	# Input: l, una lista de literales
-	# Output: True/False
-	return False
+ 	# Esta función determina si una lista de solo literales
+ 	# contiene un par complementario
+ 	# Input: l, una lista de literales
+ 	# Output: True/False
+    inorder_literales = []
+    for i in l:
+        inorder_literales.append(Inorder(i))
+    for x in l:
+        if Inorder(complemento(x)) in inorder_literales:
+            return True
+            break
+    return False
+            
+l1 = [Tree('-',None,Tree('Z1',None,None)), Tree('S1',None,None), Tree('-',None,Tree('S10',None,None)), Tree('Z10',None,None)]
+l2 = [Tree('b',None,None), Tree('-',None,Tree('a',None,None)), Tree('-',None,Tree('c',None,None)), Tree('a',None,None), Tree('d',None,None)]
+l3 = [Tree('-',None,Tree('q',None,None)), Tree('-',None,Tree('p',None,None)), Tree('q',None,None), Tree('-',None,Tree('r',None,None))]
+l4 = [Tree('1',None,None), Tree('2',None,None), Tree('-',None,Tree('3',None,None)), Tree('1',None,None)]
+
+print(par_complementario(l1))
+print(par_complementario(l2))
+print(par_complementario(l3))
+print(par_complementario(l4))
 
 def es_literal(f):
 	# Esta función determina si el árbol f es un literal
