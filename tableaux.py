@@ -69,6 +69,8 @@ def es_literal(f):
 	# Esta función determina si el árbol f es un literal
 	# Input: f, una fórmula como árbol
 	# Output: True/False
+	if f.left == None:
+        	return True
 	return False
 
 def no_literales(l):
