@@ -58,6 +58,18 @@ def imprime_hoja(H):
 		cadena += Inorder(f)
 	return cadena + "}"
 
+def complemento(l):
+    if l.label == '-':
+        return l.right
+    else :
+        return Tree('-', None, l)
+    
+l = Tree('-', None, Tree('p', None, None))
+m = Tree('p', None, None)
+
+print(Inorder(complemento(l)))
+print(Inorder(complemento(m)))
+
 def par_complementario(l):
  	# Esta función determina si una lista de solo literales
  	# contiene un par complementario
@@ -118,18 +130,4 @@ def Tableaux(f):
 
 	return listaInterpsVerdaderas
 
-##############################################################################
-# Definición de funciones de ejercicios
-##############################################################################
 
-def complemento(l):
-    if l.label == '-':
-        return l.right
-    else :
-        return Tree('-', None, l)
-    
-l = Tree('-', None, Tree('p', None, None))
-m = Tree('p', None, None)
-
-print(Inorder(complemento(l)))
-print(Inorder(complemento(m)))
