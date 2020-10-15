@@ -97,31 +97,34 @@ print(par_complementario(l2))
 print(par_complementario(l3))
 print(par_complementario(l4))
 
+
 def es_literal(f):
 	# Esta función determina si el árbol f es un literal
 	# Input: f, una fórmula como árbol
 	# Output: True/Fals
 	# Esta función determina si el árbol f es un literal
-   	if f.right == None:
-        	return True
-    	elif f.label=='-' and es_literal(f.right)
-		return True
-   	else:
-		return False
-
+    A1 = f.right
+    if f.right == None:
+        return True
+    elif (f.label=='-'):
+          if A1.right == None:
+              return True
+    return False
+  
+    
+    
 def no_literales(l):
-	# Esta función determina si una lista de fórmulas contiene
-	# solo literales
-	# Input: l, una lista de fórmulas como árboles
-	# Output: None/f, tal que f no es literales
-    x = True
+    # Esta función determina si una lista de fórmulas contiene
+    # solo literales
+    # Input: l, una lista de fórmulas como árboles
+    # Output: None/f, tal que f no es literales
+    x = False
     for i in l:
-        if (es_literal(i)== True):
-            x = False
-        else:
+        if (es_literal(i)== False):
             x = True
             break
     return x
+	
 
 print("NO LITERALES\n")
 l9 = [Tree('-',None,Tree('A1',None,None)),Tree('A2',None,None),Tree('-',None,Tree('A3',None,None)),Tree('A4',None,None),Tree('-',None,Tree('A5',None,None)),Tree('A6',None,None)]
