@@ -123,7 +123,16 @@ def no_literales(l):
             break
     return x
 
-	pass
+print("NO LITERALES\n")
+l9 = [Tree('-',None,Tree('A1',None,None)),Tree('A2',None,None),Tree('-',None,Tree('A3',None,None)),Tree('A4',None,None),Tree('-',None,Tree('A5',None,None)),Tree('A6',None,None)]
+l10 = [Tree('q',None,None),Tree('-',None,Tree('p',None,None)),Tree('-',None,Tree('-',None,Tree('p',None,None))),Tree('-',None,Tree('q',None,None))]
+l11 = [Tree('p',None,None),Tree('q',None,None),Tree('O',Tree('p',None,None),Tree('q',None,None)),Tree('-',None,Tree('q',None,None)),Tree('-',None,Tree('p',None,None))]
+l12 = [Tree('-',None,Tree('p',None,None)),Tree('p',None,None),Tree('-',None,Tree('q',None,None)),Tree('q',None,None)]
+
+print(no_literales(l9))
+print(no_literales(l10))
+print(no_literales(l11))
+print(no_literales(l12), "\n")
 
 def clasificacion(f):
 	# clasifica una fórmula como alfa o beta
