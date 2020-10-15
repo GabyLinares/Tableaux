@@ -186,6 +186,8 @@ print(clasificacion(A6))
 print(clasificacion(A7))
 print(clasificacion(A8), "\n")
 
+def clasifica_y_extiende(f,h):
+
 	# Extiende listaHojas de acuerdo a la regla respectiva
 	# Input: f, una fórmula como árbol
 	# 		 h, una hoja (lista de fórmulas como árboles)
