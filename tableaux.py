@@ -109,7 +109,15 @@ def no_literales(l):
 	# Esta función determina si una lista de fórmulas contiene
 	# solo literales
 	# Input: l, una lista de fórmulas como árboles
-	# Output: None/f, tal que f no es literal
+	# Output: None/f, tal que f no es literales
+    x = True
+    for i in l:
+        if (es_literal(i)== True):
+            x = False
+        else:
+            x = True
+            break
+    return x
 
 	pass
 
@@ -164,3 +172,44 @@ def Tableaux(f):
 	listaHojas = [[A]]
 
 	pass
+
+#BEGINNING-OF-EXECUTION
+
+print ("")
+print ("Prueba es literal")
+print ("")
+
+
+
+
+print ("")
+print ("Ejercicio es literal")
+print ("")
+
+print (es_literal(Tree('alpha',None,None)))
+print (es_literal(Tree('O',Tree('k',None,None),Tree('Y',Tree('i',None,None),Tree('j',None,None)))))
+print (es_literal(Tree('-',None,Tree('Y',Tree('p',None,None),Tree('q',None,None)))))
+print (es_literal(Tree('-',None,Tree('p',None,None))))
+
+print ("")
+print ("Prueba no_literales")
+print ("")
+
+A1 = Tree('p',None,None)
+A2 = Tree('q',None,None)
+L1 = [A1,A2]
+L2 = [Tree('-',None,Tree('p',None,None)) , Tree('q',None,None)]
+L3 = [Tree('-',None,Tree('-',None,Tree('p',None,None)))]
+L4 = [ Tree('-',None,Tree('-',None,Tree('p',None,None)))]
+
+print (no_literales(L1))
+print (no_literales(L2))
+print (no_literales(L3))
+print (no_literales(L4))
+
+print ("")
+print ("Ejercicio no_literales")
+print ("")
+
+
+
