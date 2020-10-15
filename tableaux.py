@@ -203,15 +203,72 @@ def clasifica_y_extiende(f, h):
 	print("Clasificada como:", clase)
 	assert(clase != None), "Formula incorrecta " + imprime_hoja(h)
 
-	if clase == 'Alfa1':
+	def clasifica_y_extiende(f,h):
+	# Extiende listaHojas de acuerdo a la regla respectiva
+	# Input: f, una fórmula como árbol
+	# 		 h, una hoja (lista de fórmulas como árboles)
+	# Output: no tiene output, pues modifica la variable global listaHojas
+
+	global listaHojas
+
+	print("Formula:", Inorder(f))
+	print("Hoja:", imprime_hoja(h))
+
+	assert(f in h), "La formula no esta en la lista!"
+
+	clase = clasificacion(f)
+	print("Clasificada como:", clase)
+	assert(clase != None), "Formula incorrecta " + imprime_hoja(h)
+
+	if clase == 'ALFA1':
 		aux = [x for x in h]
 		listaHojas.remove(h)
 		aux.remove(f)
 		aux += [f.right.right]
 		listaHojas.append(aux)
-	elif clase == 'Alfa2':
-		pass
-	# Aqui el resto de casos
+        
+    	elif clase == 'ALFA2':
+        	aux = [x for x in h]
+		listaHojas.remove(h)
+		aux.remove(f)
+		aux += [f.right , f.left]
+		listaHojas.append(aux)
+		
+   	elif clase == 'ALFA3':
+		aux = [x for x in h]
+		listaHojas.remove(h)
+		aux.remove(f)
+		aux += [Tree('-',None,f.right.right), Tree('-',None, f.right.left)]
+		listaHojas.append(aux)
+        
+    	elif clase == 'ALFA4':
+		aux = [x for x in h]
+		listaHojas.remove(h)
+		aux.remove(f)
+		aux += [f.right.right), Tree('-',None, f.right.left)]
+		listaHojas.append(aux)
+        
+    	elif clase == 'BETA1':
+        	aux = [x for x in h]
+		listaHojas.remove(h)
+		aux.remove(f)
+		aux += [[Tree('-',None,f.right.right)], [Tree('-',None, f.right.left)]]
+		listaHojas.append(aux)
+        
+    	elif clase == 'BETA2':
+        	aux = [x for x in h]
+		listaHojas.remove(h)
+		aux.remove(f)
+		aux += [[f.right] , [f.left]]
+		listaHojas.append(aux)
+        
+    	elif clase == 'BETA3':
+        	aux = [x for x in h]
+		listaHojas.remove(h)
+		aux.remove(f)
+		aux += [[Tree('-',None,f.right.right)], [f.right.left)]]
+		listaHojas.append(aux)
+        
 
 
 def Tableaux(f):
