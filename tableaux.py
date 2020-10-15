@@ -100,10 +100,14 @@ print(par_complementario(l4))
 def es_literal(f):
 	# Esta función determina si el árbol f es un literal
 	# Input: f, una fórmula como árbol
-	# Output: True/False
-	if f.left == None:
+	# Output: True/Fals
+	# Esta función determina si el árbol f es un literal
+   	if f.right == None:
         	return True
-	return False
+    	elif f.label=='-' and es_literal(f.right)
+		return True
+   	else:
+		return False
 
 def no_literales(l):
 	# Esta función determina si una lista de fórmulas contiene
