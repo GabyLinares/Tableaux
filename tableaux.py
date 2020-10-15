@@ -186,24 +186,6 @@ print(clasificacion(A6))
 print(clasificacion(A7))
 print(clasificacion(A8), "\n")
 
-def clasifica_y_extiende(f, h):
-	# Extiende listaHojas de acuerdo a la regla respectiva
-	# Input: f, una fórmula como árbol
-	# 		 h, una hoja (lista de fórmulas como árboles)
-	# Output: no tiene output, pues modifica la variable global listaHojas
-
-	global listaHojas
-
-	print("Formula:", Inorder(f))
-	print("Hoja:", imprime_hoja(h))
-
-	assert(f in h), "La formula no esta en la lista!"
-
-	clase = clasificacion(f)
-	print("Clasificada como:", clase)
-	assert(clase != None), "Formula incorrecta " + imprime_hoja(h)
-
-	def clasifica_y_extiende(f,h):
 	# Extiende listaHojas de acuerdo a la regla respectiva
 	# Input: f, una fórmula como árbol
 	# 		 h, una hoja (lista de fórmulas como árboles)
