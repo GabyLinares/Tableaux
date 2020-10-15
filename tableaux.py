@@ -142,27 +142,49 @@ def clasificacion(f):
 	# Input: f, una fórmula como árbol
 	# Output: string de la clasificación de la formula
     
+    if es_literal(f) == False:
     #REGLAS ALFA
     
-    if f.label == '-':
-       if f.right.label == '-':
-              return '1ALFA'
-       elif f.right.label == 'O':
-              return '3ALFA'
-       elif f.right.label == '>':
-              return '4ALFA'
-    elif f.label == 'Y':
-        return '2ALFA'
-    
-    #REGLAS BETA
-    
-    if f.label == '-':
-        if f.right.label == 'Y':
-            return '1BETA'
-    elif f.label == 'O':
-        return '2BETA'
-    elif f.label == '>':
-        return '3BETA'
+        if f.label == '-':
+           if f.right.label == '-':
+                  return '1ALFA'
+           elif f.right.label == 'O':
+                  return '3ALFA'
+           elif f.right.label == '>':
+                  return '4ALFA'
+        elif f.label == 'Y':
+            return '2ALFA'
+        
+        #REGLAS BETA
+        
+        if f.label == '-':
+            if f.right.label == 'Y':
+                return '1BETA'
+        elif f.label == 'O':
+            return '2BETA'
+        elif f.label == '>':
+            return '3BETA'
+    else:
+        return 'ERROR EN LA CLASIFICACIÓN'
+
+print("CLASIFICACIÓN\n")
+A1 = Tree('-',None,Tree('O',Tree('>',Tree('m',None,None),Tree('n',None,None)),Tree('-',None,Tree('l',None,None))))
+A2 = Tree('-',None,Tree('pq>',None,None))
+A3 = Tree('Y',Tree('>',Tree('x',None,None),Tree('z',None,None)),Tree('O',Tree('-',None,Tree('w',None,None)),Tree('-',None,Tree('y',None,None))))
+A4 = Tree('O',Tree('-',None,Tree('s',None,None)),Tree('Y',Tree('t',None,None),Tree('>',Tree('u',None,None),Tree('v',None,None))))
+A5 = Tree('-',None,Tree('>',Tree('-',None,Tree('1',None,None)),Tree('Y',Tree('-',None,Tree('3',None,None)),Tree('2',None,None))))
+A6 = Tree('-',None,Tree('Y',Tree('-',None,Tree('a',None,None)),Tree('-',None,Tree('b',None,None))))
+A7 = Tree('-',None,Tree('-',None,Tree('-',None,Tree('O',Tree('p',None,None),Tree('q',None,None)))))
+A8 = Tree('>',Tree('Y',Tree('p',None,None),Tree('>',Tree('p',None,None),Tree('q',None,None))),Tree('q',None,None))
+
+print(clasificacion(A1))
+print(clasificacion(A2))
+print(clasificacion(A3))
+print(clasificacion(A4))
+print(clasificacion(A5))
+print(clasificacion(A6))
+print(clasificacion(A7))
+print(clasificacion(A8), "\n")
 
 def clasifica_y_extiende(f, h):
 	# Extiende listaHojas de acuerdo a la regla respectiva
