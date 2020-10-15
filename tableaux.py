@@ -141,8 +141,28 @@ def clasificacion(f):
 	# clasifica una fórmula como alfa o beta
 	# Input: f, una fórmula como árbol
 	# Output: string de la clasificación de la formula
-
-	pass
+    
+    #REGLAS ALFA
+    
+    if f.label == '-':
+       if f.right.label == '-':
+              return '1ALFA'
+       elif f.right.label == 'O':
+              return '3ALFA'
+       elif f.right.label == '>':
+              return '4ALFA'
+    elif f.label == 'Y':
+        return '2ALFA'
+    
+    #REGLAS BETA
+    
+    if f.label == '-':
+        if f.right.label == 'Y':
+            return '1BETA'
+    elif f.label == 'O':
+        return '2BETA'
+    elif f.label == '>':
+        return '3BETA'
 
 def clasifica_y_extiende(f, h):
 	# Extiende listaHojas de acuerdo a la regla respectiva
