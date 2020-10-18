@@ -40,10 +40,43 @@ def String2Tree(A):
 	#        - letrasProposicionales, lista de letras proposicionales
 	#        - conectivos, lista de conectivos
 	# Output: formula como tree
+	pila = []
+	for c in A:
+		# print("Examinando " + str(c))
+		if c in letrasProposicionales:
+			# print(u"El símbolo es letra proposicional")
+			pila.append(Tree(c, None, None))
+		elif c == '-':
+			# print("Negamos")
+			formulaAux = Tree(c, None, pila[-1])
+			del pila[-1]
+			pila.append(formulaAux)
+		elif c in conectivos:
+			# print("Unimos mediante conectivo")
+			formulaAux = Tree(c, pila[-1], pila[-2])
+			del pila[-1]
+			del pila[-1]
+			pila.append(formulaAux)
+		else:
+			print(u"Hay un problema: el símbolo " + str(c) + " no se reconoce")
+	return pila[-1]
 
-	# OJO: DEBE INCLUIR SU CÓDIGO DE STRING2TREE EN ESTA PARTE!!!!!
-
-	pass
+def Inorder2Tree(A):
+	if len(A) == 1:
+		return Tree(A[0], None, None)
+	elif A[0] == '-':
+		return Tree(A[0], None, Inorder2Tree(A[1:]))
+	elif A[0] == "(":
+		counter = 0 #Contador de parentesis
+		for i in range(1, len(A)):
+			if A[i] == "(":
+				counter += 1
+			elif A[i] == ")":
+				counter -=1
+			elif (A[i] in ['Y', 'O', '>', '=']) and (counter == 0):
+				return Tree(A[i], Inorder2Tree(A[1:i]), Inorder2Tree(A[i + 1:-1]))
+	else:
+		return -1
 
 ##############################################################################
 # Definición de funciones de tableaux
@@ -60,18 +93,21 @@ def imprime_hoja(H):
 		cadena += Inorder(f)
 	return cadena + "}"
 
+def imprime_listaHojas(L):
+	for h in L:
+		print(imprime_hoja(h))
+
 def complemento(l):
     if l.label == '-':
         return l.right
     else :
         return Tree('-', None, l)
-    
+
 l = Tree('-', None, Tree('q', None, None))
 m = Tree('p', None, None)
 
 #print(Inorder(complemento(l)))
 #print(Inorder(complemento(m)))
-    
 
 def par_complementario(l):
  	# Esta función determina si una lista de solo literales
@@ -92,11 +128,11 @@ l2 = [Tree('b',None,None), Tree('-',None,Tree('a',None,None)), Tree('-',None,Tre
 l3 = [Tree('-',None,Tree('q',None,None)), Tree('-',None,Tree('p',None,None)), Tree('q',None,None), Tree('-',None,Tree('r',None,None))]
 l4 = [Tree('1',None,None), Tree('2',None,None), Tree('-',None,Tree('3',None,None)), Tree('1',None,None)]
 
+print("PAR COMPLEMENTARIO\n")
 print(par_complementario(l1))
 print(par_complementario(l2))
 print(par_complementario(l3))
-print(par_complementario(l4))
-
+print(par_complementario(l4), "\n")
 
 def es_literal(f):
 	# Esta función determina si el árbol f es un literal
@@ -110,21 +146,33 @@ def es_literal(f):
           if A1.right == None:
               return True
     return False
-  
-    
-    
+
+print("ES LITERAL\n")
+l5 = Tree('-',None,Tree('p',None,None))
+l6 = Tree('-',None,Tree('Y',Tree('p',None,None),Tree('q',None,None)))
+l7 = Tree('alpha',None,None)
+l8 = Tree('O',Tree('k',None,None),Tree('Y',Tree('i',None,None),Tree('j',None,None)))
+A =  Tree('-',None,Tree('-',None,Tree('p',None,None)))
+
+print(es_literal(l5))
+print(es_literal(l6))
+print(es_literal(l7))
+print(es_literal(A))
+print(es_literal(l8), "\n")
+
 def no_literales(l):
-    # Esta función determina si una lista de fórmulas contiene
-    # solo literales
-    # Input: l, una lista de fórmulas como árboles
-    # Output: None/f, tal que f no es literales
-    x = False
+	# Esta función determina si una lista de fórmulas contiene
+	# solo literales
+	# Input: l, una lista de fórmulas como árboles
+	# Output: None/f, tal que f no es literales
+    x = True
     for i in l:
-        if (es_literal(i)== False):
+        if (es_literal(i) == True):
+            x = False
+        else:
             x = True
             break
     return x
-	
 
 print("NO LITERALES\n")
 l9 = [Tree('-',None,Tree('A1',None,None)),Tree('A2',None,None),Tree('-',None,Tree('A3',None,None)),Tree('A4',None,None),Tree('-',None,Tree('A5',None,None)),Tree('A6',None,None)]
@@ -186,73 +234,96 @@ print(clasificacion(A6))
 print(clasificacion(A7))
 print(clasificacion(A8), "\n")
 
-def clasifica_y_extiende(f,h):
+# def clasifica_y_extiende(f, h):
+# 	# Extiende listaHojas de acuerdo a la regla respectiva
+# 	# Input: f, una fórmula como árbol
+# 	# 		 h, una hoja (lista de fórmulas como árboles)
+# 	# Output: no tiene output, pues modifica la variable global listaHojas
 
-	# Extiende listaHojas de acuerdo a la regla respectiva
+# 	global listaHojas
+
+# 	print("Formula:", Inorder(f))
+# 	print("Hoja:", imprime_hoja(h))
+
+# 	assert(f in h), "La formula no esta en la lista!"
+
+# 	clase = clasificacion(f)
+# 	print("Clasificada como:", clase)
+# 	assert(clase != None), "Formula incorrecta " + imprime_hoja(h)
+
+# 	if clase == 'Alfa1':
+# 		aux = [x for x in h if x != f] + [f.right.right]
+# 		listaHojas.remove(h)
+# 		listaHojas.append(aux)
+# 	elif clase == 'Alfa2':
+# 		pass
+# 	# Aqui el resto de casos
+
+def clasifica_y_extiende(f, h):
+# Extiende listaHojas de acuerdo a la regla respectiva
 	# Input: f, una fórmula como árbol
 	# 		 h, una hoja (lista de fórmulas como árboles)
 	# Output: no tiene output, pues modifica la variable global listaHojas
 
-	global listaHojas
+    global listaHojas
 
-	print("Formula:", Inorder(f))
-	print("Hoja:", imprime_hoja(h))
+    print("Formula:", Inorder(f))
+    print("Hoja:", imprime_hoja(h))
 
-	assert(f in h), "La formula no esta en la lista!"
+    assert(f in h), "La formula no esta en la lista!"
 
-	clase = clasificacion(f)
-	print("Clasificada como:", clase)
-	assert(clase != None), "Formula incorrecta " + imprime_hoja(h)
+    clase = clasificacion(f)
+    print("Clasificada como:", clase)
+    assert(clase != None), "Formula incorrecta " + imprime_hoja(h)
 
-	if clase == 'ALFA1':
-		aux = [x for x in h]
-		listaHojas.remove(h)
-		aux.remove(f)
-		aux += [f.right.right]
-		listaHojas.append(aux)
+    if clase == 'ALFA1':
+        aux = [x for x in h]
+        listaHojas.remove(h)
+        aux.remove(f)
+        aux += [f.right.right]
+        listaHojas.append(aux)
         
-    	elif clase == 'ALFA2':
-        	aux = [x for x in h]
-		listaHojas.remove(h)
-		aux.remove(f)
-		aux += [f.right , f.left]
-		listaHojas.append(aux)
-		
-   	elif clase == 'ALFA3':
-		aux = [x for x in h]
-		listaHojas.remove(h)
-		aux.remove(f)
-		aux += [Tree('-',None,f.right.right), Tree('-',None, f.right.left)]
-		listaHojas.append(aux)
+    elif clase == 'ALFA2':
+        aux = [x for x in h]
+        listaHojas.remove(h)
+        aux.remove(f)
+        aux += [f.right , f.left]
+        listaHojas.append(aux)
         
-    	elif clase == 'ALFA4':
-		aux = [x for x in h]
-		listaHojas.remove(h)
-		aux.remove(f)
-		aux += [f.right.right), Tree('-',None, f.right.left)]
-		listaHojas.append(aux)
+    elif clase == 'ALFA3':
+        aux = [x for x in h]
+        listaHojas.remove(h)
+        aux.remove(f)
+        aux += [Tree('-',None,f.right.right), Tree('-',None, f.right.left)]
+        listaHojas.append(aux)
         
-    	elif clase == 'BETA1':
-        	aux = [x for x in h]
-		listaHojas.remove(h)
-		aux.remove(f)
-		aux += [[Tree('-',None,f.right.right)], [Tree('-',None, f.right.left)]]
-		listaHojas.append(aux)
+    elif clase == 'ALFA4':
+        aux = [x for x in h]
+        listaHojas.remove(h)
+        aux.remove(f)
+        aux += [f.right.right, Tree('-',None, f.right.left)]
+        listaHojas.append(aux)
         
-    	elif clase == 'BETA2':
-        	aux = [x for x in h]
-		listaHojas.remove(h)
-		aux.remove(f)
-		aux += [[f.right] , [f.left]]
-		listaHojas.append(aux)
+    elif clase == 'BETA1':
+        aux = [x for x in h]
+        listaHojas.remove(h)
+        aux.remove(f)
+        aux += [[Tree('-',None,f.right.right)], [Tree('-',None, f.right.left)]]
+        listaHojas.append(aux)
         
-    	elif clase == 'BETA3':
-        	aux = [x for x in h]
-		listaHojas.remove(h)
-		aux.remove(f)
-		aux += [[Tree('-',None,f.right.right)], [f.right.left)]]
-		listaHojas.append(aux)
+    elif clase == 'BETA2':
+        aux = [x for x in h]
+        listaHojas.remove(h)
+        aux.remove(f)
+        aux += [[f.right] , [f.left]]
+        listaHojas.append(aux)
         
+    elif clase == 'BETA3':
+        aux = [x for x in h]
+        listaHojas.remove(h)
+        aux.remove(f)
+        aux += [[Tree('-',None,f.right.right)], [f.right.left]]
+        listaHojas.append(aux)
 
 
 def Tableaux(f):
@@ -270,45 +341,17 @@ def Tableaux(f):
 
 	listaHojas = [[A]]
 
-	pass
+	while (len(listaHojas) > 0):
+		h = choice(listaHojas)
+		print("Trabajando con hoja:\n", imprime_hoja(h))
+		x = no_literales(h)
+		if x == None:
+			if par_complementario(h):
+				listaHojas.remove(h)
+			else:
+				listaInterpsVerdaderas.append(h)
+				listaHojas.remove(h)
+		else:
+			clasifica_y_extiende(x, h)
 
-#BEGINNING-OF-EXECUTION
-
-print ("")
-print ("Prueba es literal")
-print ("")
-
-
-
-
-print ("")
-print ("Ejercicio es literal")
-print ("")
-
-print (es_literal(Tree('alpha',None,None)))
-print (es_literal(Tree('O',Tree('k',None,None),Tree('Y',Tree('i',None,None),Tree('j',None,None)))))
-print (es_literal(Tree('-',None,Tree('Y',Tree('p',None,None),Tree('q',None,None)))))
-print (es_literal(Tree('-',None,Tree('p',None,None))))
-
-print ("")
-print ("Prueba no_literales")
-print ("")
-
-A1 = Tree('p',None,None)
-A2 = Tree('q',None,None)
-L1 = [A1,A2]
-L2 = [Tree('-',None,Tree('p',None,None)) , Tree('q',None,None)]
-L3 = [Tree('-',None,Tree('-',None,Tree('p',None,None)))]
-L4 = [ Tree('-',None,Tree('-',None,Tree('p',None,None)))]
-
-print (no_literales(L1))
-print (no_literales(L2))
-print (no_literales(L3))
-print (no_literales(L4))
-
-print ("")
-print ("Ejercicio no_literales")
-print ("")
-
-
-
+	return listaInterpsVerdaderas
