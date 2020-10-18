@@ -303,21 +303,28 @@ def clasifica_y_extiende(f, h):
         aux.remove(f)
         aux += [f.right.right, Tree('-',None, f.right.left)]
         listaHojas.append(aux)
-        
+	
     elif clase == 'BETA1':
         aux = [x for x in h]
         listaHojas.remove(h)
-        listaHojas.append([[Tree('-',None,f.right.right)], [Tree('-',None, f.right.left)]])
+        aux.remove(f)
+        listaHojas.append([Tree('-',None,f.right.right)])
+        listaHojas.append([Tree('-',None, f.right.left)])
         
     elif clase == 'BETA2':
         aux = [x for x in h]
         listaHojas.remove(h)
-        listaHojas.append([[f.right] , [f.left]])
+        aux.remove(f)
+        listaHojas.append([f.right]) 
+        listaHojas.append([f.left])
         
     elif clase == 'BETA3':
         aux = [x for x in h]
         listaHojas.remove(h)
-        listaHojas.append([[Tree('-',None,f.right.right)], [f.right.left]])
+        aux.remove(f)
+        listaHojas.append([Tree('-',None,f.right.right)])
+        listaHojas.append([f.right.left])
+
 
 def Tableaux(f):
 
