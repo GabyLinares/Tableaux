@@ -139,11 +139,9 @@ def es_literal(f):
 	# Input: f, una fórmula como árbol
 	# Output: True/Fals
 	# Esta función determina si el árbol f es un literal
-    A1 = f.right
     if f.right == None:
         return True
-    elif (f.label=='-'):
-          if A1.right == None:
+    elif f.label=='-' and f.right.right == None:
               return True
     return False
 
